@@ -1,160 +1,257 @@
-
 <!DOCTYPE html>
 <html lang="en" >
 
 <head>
-
   <meta charset="UTF-8">
   
-  <title>CYBV 330 - Intro Video</title>
   
+  
+
+  <title>CYBV-330</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Rubik&display=swap" rel="stylesheet">
   
   
   
 <style>
+:root {
+	--dark: #252A2E;
+	--light: #F5F5F5;
+	--background: var(--dark);
+	--text: var(--light);
+	--border: var(--light);
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: var(--dark);
+		--text: var(--light);
+		--border: var(--light);
+	}
+}
+html {
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+/*	BASIC STYLING FOR THE DEMO */
 body {
-  margin: 0;
-  padding: 5vh 5vw;
-  background: black;
-  overflow:hidden;
+	display: grid;
+	min-block-size: 100vh;
+	place-content: center;
+	background: var(--background);
+	color: var(--text);
 }
 
-* {
-  box-sizing: border-box;
+/*	CURRENT MAX WIDTH IS JUST FOR DEMO PURPOSES */
+.tag-scrollers {
+	width: 100%;
+	max-width: 1200px;
+	overflow: hidden;
 }
 
-p {
-  font-family: monospace;
-  font-weight: bold;
-  font-size: 4.1vh;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  color: limegreen;
-  text-shadow: 0px 0px 10px limegreen;
+/*	POSSIBLY UPDATE COLORS IN THE GRADIENT
+		TO MATCH THE PROJECT DESIGN SYSTEM
+*/
+.tag-scroller {
+	display: grid;
+	gap: 1.5rem;
+	mask: linear-gradient(90deg, #0000, var(--background) 15%, var(--background) 85%, #0000);
 }
 
-.msg {
-  font-family: monospace;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 4vh;
-  padding-top: 0vh;
-  background: red;
-  box-shadow: 0 0 30px blue;
-  text-shadow: 0 0 20px white;
-  color: white;
-  width: 20vw;
-  height: 15vh;
-  position: absolute;
-  left: 50%;
-  margin-left: -10vw;
-  top: 50%;
-  margin-top: -5vh;
-  text-align: center;
-  min-width: 200px;
-  animation-name: blink;
-  animation-duration: 0.6s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: linear;
+.tag-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	/*	IF THE GAP IS CHANGED, DON'T FORGET TO CHANGE 
+			THE TRANSFORM VALUE IN THE SCROLL ANIMATION
+			AT THE END OF THE STYLING
+	*/
+	gap: 1.5rem;
 }
 
-@keyframes blink {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+/*	IF THE USERS PREFERS REDUCED MOTION
+		PRESENT THEM WITH A HOROZONTAL LIST
+		OF ALL ELEMENTS AND GIVE THEM THE
+		OPTION TO MANUALLY SCROLL BY SWIPING
+*/
+@media (prefers-reduced-motion) {
+	.tag-list {
+		flex-flow: row nowrap;
+		overflow: auto;
+		scrollbar-width: none;
+		scrollbar-color: transparent transparent;
+	}
+	.tag-list::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.tag-list::-webkit-scrollbar-thumb {
+		background: transparent;
+	}
+	.tag-list::-webkit-scrollbar {
+		display: none;
+		width: 0;
+		height: 0;
+	}
+}
+
+/*	BASIC STYLING OF THE LIST ITEMS
+		FOR DEMO PURPOSES. MOST PROPERTIES
+		SHOULD BE KEPT AS IS BUT PROBABLY
+		UPDATE THE VALUE FOR font-family
+		AND border
+*/
+.tag-list li {
+	font-family: system-ui;
+	font-size: 1.125rem;
+	line-height: 1;
+	padding: 0.625rem 1.375rem;
+	border: 2px solid var(--border);
+	border-radius: 10ch;
+	white-space: nowrap;
+}
+
+/*	THE DURATION IS SET FROM A CUSTOM PROPERTY
+		CALCULATED IN THE SCRIPT AS IT'S ONLY NEEDED
+		IF THE ANIMATION SHOULD RUN, WHICH IS ALSO
+		CHECKED BY THE SCRIPT
+
+		THE DIRECTION IS SET TO normal AS DEFULT
+		AND THEN SET TO reverse	FOR EVERY OTHER SCROLLER
+*/
+.tag-scroller.scrolling .tag-list {
+	width: max-content;
+	flex-wrap: nowrap;
+	animation: horizontal-scroll var(--duration) var(--direction, normal) linear infinite;
+}
+
+.tag-scroller.scrolling .tag-list:nth-child(even) {
+	--direction: reverse;
+}
+
+/* PAUSING THE ANIMATION ON HOVER */
+.tag-scroller:hover .tag-list {
+	animation-play-state: paused;
+}
+
+@keyframes horizontal-scroll {
+	to {
+		/*	0.75rem FOR HALF THE GAP
+				OF THE .tag-scroller
+		*/
+		transform: translateX(calc(-50% - .75rem));
+	}
 }
 </style>
 
   
   
   
-  
-
 </head>
 
-<body translate="no" >
-  <div class="msg">//LECTURE WARN// LECTURE # 1 //SYSTEM WARN//</div>
-<div id="console">
+<body>
+  <div class="tag-scrollers">
+	<div class="tag-scroller">
+		<ul class="tag-list">
+			<li>Lecture 2</li>
+      <li>ICS</li>
+      <li>SCADA</li>
+      <li>DCS</li>
+			<li>CYBV 330</li>
+			<li>INTRODUCTION TO ICS SECURITY</li>
+			<li>Week 1 Complete</li>
+			<li>Lecture Starting Soon</li>
+			<li>Week 2 In Progress</li>
+			<li>Week 3 Pending</li>
+			<li>Week 4 Pending</li>
+			<li>Week 5 Pending</li>
+			<li>Week 6 Pending</li>
+      <li>MIDTERM Pending</li>
+			<li>Week 7 Pending</li>
+			<li>Week 8 Pending</li>
+			<li>Week 9 Pending</li>
+			<li>Week 10 Pending</li>
+			<li>Week 11 Pending</li>
+			<li>Week 12 Pending</li>
+			<li>Week 13 Pending</li>
+			<li>Week 14 Pending</li>
+			<li>Week 15 Pending</li>
+			<li>FINAL Pending</li>
+		</ul>
+	</div>
 </div>
-  
-  
+  <script src='https://kit.fontawesome.com/54951c559c.js'></script>
       <script id="rendered-js" >
-var intervalID = window.setInterval(updateScreen, 200);
-var c = document.getElementById("console");
+/*	CHECK FOR PREFERED REDUCED MOTION
+		AND IF SO, DO NOT RUN ANY OF THE SCRIPTS
+		SPLITTING THE LIST ELEMENT INTO MULTIPLE
+		LISTS OR APPLYING THE SCROLL ANIMATION
+*/
+const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+if (mediaQuery && !mediaQuery.matches) {
+	const tagScroller = document.querySelector(".tag-scroller");
+	const allTags = tagScroller.querySelectorAll("li");
+	
+	function createElement(tagName, className = "") {
+		const elem = document.createElement(tagName);
+		elem.className = className;
+		return elem;
+	}
 
-var txt = [
-  "OPEN C:/ CYBV 330: ICS",
-  "LECTURE ALERT: Week 1: BACNET ANALYSIS",
-  "RETRY: CONNECTING to MALWARE FILTER",
-  "Z:> /FALKEN/GAMES/TICTACTOE/ EXECUTE -PLAYERS 0",
-  "================================================",
-  "Priority 1 // local / scanning...",
-  "scanning ports...",
-  "BACKDOOR FOUND (23.45.23.12.00000000)",
-  "BACKDOOR FOUND (13.66.23.12.00110000)",
-  "BACKDOOR FOUND (13.66.23.12.00110044)",
-  "...",
-  "...",
-  "BRUTE.EXE -r -z",
-  "...locating vulnerabilities...",
-  "...vulnerabilities found...",
-  "MCP/> DEPLOY CLU",
-  "SCAN: __ PCAP QUIZ 2",
-  "SCAN: __ FIN - ACK - FIN - ACK",
-  "SCAN: __ Application - Data",
-  "SCAN: __ Transport - Segment",
-  "SCAN: __ Network - Packet",
-  "SCAN: __ Data - Frame",
-  "SCAN: __ She wants to runs a program on the network that will allow her to see which ports are accepting TCP and UDP connections.  Which tool should she use?  NMAP",
-  "SCAN: A process sends messages into , and receives messages from, the network through a software interface called a socket",
-  "Message = b\x05\x64\x08\xc4\x01\x00\x02\x00\x39\x0d\xde\xce\x0e\x6c\xd1",
-  "Message = b\x05\x64\x08\xc4\x01\x00\x02\x00\x39\x0d\xde\xce\x0e\x6c\xd1",
-  "Message = b\x05\x64\x08\xc4\x01\x00\x02\x00\x39\x0d\xde\xce\x0e\x6c\xd1",
-  "LECTURE ALERT: Week 1:  In Progress",
-  "LECTURE ALERT: Week 2:  Pending",
-  "LECTURE ALERT: Week 3:  Pending",
-  "LECTURE ALERT: Week 4:  Pending",
-  "LECTURE ALERT: Week 5:  Pending",
-  "LECTURE ALERT: Week 6:  Pending",
-  "LECTURE ALERT: Week 7:  Pending",
-  "LECTURE ALERT: Week 8:  Pending",
-  "LECTURE ALERT: Week 9:  Pending",
-  "LECTURE ALERT: Week 10: Pending",
-  "LECTURE ALERT: Week 11: Pending",
-  "LECTURE ALERT: Week 12: Pending",
-  "LECTURE ALERT: Week 13: Pending",
-  "LECTURE ALERT: Week 14: Pending",
-  "Message = b\x05\x64\x08\xc4\x01\x00\x02\x00\x39\x0d\xde\xce\x0e\x6c\xd1",
-  "Propagation Delay - the amount of time it takes for the head of the signal to travel from the sender to the receiver",
-]
+	function scrollersFrom(elements, numColumns = 2) {
+		const fragment = new DocumentFragment();
+		elements.forEach((element, i) => {
+			const column = i % numColumns;
+			const children = fragment.children;
+			if (!children[column]) fragment.appendChild(createElement("ul", "tag-list"));
+			children[column].appendChild(element);
+		});
+		return fragment;
+	}
+	
+	/*	SPLIT THE LIST ELEMENT INTO TWO LISTS
+			AND CALL THE ANIMATION
+	*/
+	const scrollers = scrollersFrom(allTags, 2);
+	tagScroller.innerHTML = "";
+	tagScroller.appendChild(scrollers);
+	addScrolling();
 
-var docfrag = document.createDocumentFragment();
-
-function updateScreen() {
-  //Shuffle the "txt" array
-  txt.push(txt.shift());
-  //Rebuild document fragment
-  txt.forEach(function(e) {
-    var p = document.createElement("p");
-    p.textContent = e;
-    docfrag.appendChild(p);
-  });
-  //Clear DOM body
-  while (c.firstChild) {
-    c.removeChild(c.firstChild);
-  }
-  c.appendChild(docfrag);
+	/*	ADD scrolling CLASS TO THE WRAPPER ELEMENT,
+			CLONE EACH LIST ITEM TO MAKE THE LIST LONG ENOUGH
+			FOR INFINITE SCROLL AND THEN CALCULATE THE DURATION
+			BASED ON WIDTH OF EACH SCROLLER TO MAKE THEM
+			MOVE AT THE SAME RATE OF SPEED
+			
+			DEPENDING ON THE WIDTH OF .tag-scrollers, THE NUMBER OF
+			LIST ITEMS AND THEIR INDIVIDUAL WIDTH, YOU MIGHT NEED
+			TO CLONE THEM TWO TIMES EACH TO BE SURE EACH .tag-scroller
+			WILL BE WIDE ENOUGH TO SUPPORT INFINITE SCROLL
+			
+			THIS COULD OF COURSE BE ADDED TO THE SCRIPT
+			BUT FOR OUR USE CASE, WE KNOW THE MINIMUM NUMBER OF
+			LIST ELEMENTS WILL BE ENOUGH FOR ONE CLONE EACH
+	*/
+	function addScrolling() {
+		tagScroller.classList.add("scrolling");
+		document.querySelectorAll(".tag-list").forEach((tagList) => {
+			const scrollContent = Array.from(tagList.children);
+			scrollContent.forEach((listItem) => {
+				const clonedItem = listItem.cloneNode(true);
+				clonedItem.setAttribute("aria-hidden", true);
+				tagList.appendChild(clonedItem);
+			});
+			tagList.style.setProperty("--duration", (tagList.clientWidth / 100) + "s");
+		});
+	}
 }
     </script>
 
   
-
 </body>
 
 </html>
- 
